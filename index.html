@@ -1,10 +1,57 @@
-import { useState } from "react";
-import {
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>منصة سند الرقمية — بلدية الوادي كوينين</title>
+  <meta name="description" content="منصة سند الرقمية لإدارة المحتاجين — بلدية الوادي كوينين"/>
+
+  <!-- React 18 -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- Babel Standalone (compiles JSX in browser) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    html, body { margin: 0; padding: 0; min-height: 100vh; }
+    #root { min-height: 100vh; }
+    #loading {
+      position: fixed; inset: 0;
+      background: #f0f5f2;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      font-family: 'Cairo', sans-serif;
+      z-index: 9999;
+    }
+    #loading svg { animation: spin 1.2s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+  </style>
+</head>
+<body>
+  <div id="loading">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2e7d50" stroke-width="2.5">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" fill="#2e7d50"/>
+    </svg>
+    <p style="margin-top:16px;color:#4a6855;font-size:.95rem;font-family:sans-serif">
+      جارٍ تحميل منصة سند...
+    </p>
+  </div>
+
+  <div id="root"></div>
+
+  <script type="text/babel" data-presets="react">
+const { useState } = React;
+const {
   Users, UserPlus, LogOut, Eye, EyeOff, ShieldCheck,
   Search, BookOpen, Camera, X, Edit2, Trash2,
   LayoutGrid, List, Plus, FileDown, AlertTriangle,
   TrendingUp, Heart, CheckCircle
-} from "lucide-react";
+} = lucide;
 
 // ══════════════════════════════════════════════════════
 // DATA
@@ -1709,7 +1756,7 @@ const UserInterface = ({ user, needy, receipts, setReceipts, onLogout }) => {
 // ══════════════════════════════════════════════════════
 // APP ROOT
 // ══════════════════════════════════════════════════════
-export default function App() {
+function App() {
   const [users, setUsers] = useState([]);
   const [needy, setNeedy] = useState(INIT_NEEDY);
   const [receipts, setReceipts] = useState([]);
@@ -1740,3 +1787,12 @@ export default function App() {
     </>
   );
 }
+
+// ── Mount ──
+const rootEl = document.getElementById('root');
+const appRoot = ReactDOM.createRoot(rootEl);
+appRoot.render(React.createElement(App));
+document.getElementById('loading').style.display = 'none';
+  </script>
+</body>
+</html>
